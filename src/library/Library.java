@@ -3,10 +3,14 @@ package library;
 import java.util.*;
 
 public class Library {
-    private static Library instance; // Instance
-    private ArrayList<Book> books; // Books list
-    private ArrayList<Member> members; // Members list
-    private ArrayList<Loan> loans; // Loans list
+    // Singleton instance
+    private static Library instance;
+    // Books list
+    private ArrayList<Book> books;
+    // Members list
+    private ArrayList<Member> members;
+    // Loans list
+    private ArrayList<Loan> loans;
 
     // Constructor
     private Library() {

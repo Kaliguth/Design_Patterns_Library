@@ -3,15 +3,21 @@ package library;
 import java.time.LocalDate;
 
 public class Loan {
+    // Loaned book
     private Book book;
+    // Loan member
     private Member member;
+    // Loan date
     private LocalDate loanDate;
+    // Return date
     private LocalDate returnDate;
 
+    // Constructor
     public Loan(Book book, Member member) {
         this.book = book;
         this.member = member;
         this.loanDate = LocalDate.now();
+        // Return 7 days after loan date
         this.returnDate = this.loanDate.plusDays(7);
     }
 

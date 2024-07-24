@@ -1,9 +1,13 @@
 package library;
 
 public class Book implements Cloneable {
+    // Title
     private String title;
+    // Author
     private String author;
+    // Publication date
     private String publicationDate;
+    // Boolean to determine if the book is available
     private boolean isAvailable;
 
     // Constructor
