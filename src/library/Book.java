@@ -1,13 +1,9 @@
 package library;
 
-public class Book {
-    // Title
+public class Book implements Cloneable {
     private String title;
-    // Author
     private String author;
-    // Publication date
     private String publicationDate;
-    // Boolean to determine if the book is available
     private boolean isAvailable;
 
     // Constructor
@@ -49,6 +45,17 @@ public class Book {
 
     public void setAvailability(boolean availability) {
         this.isAvailable = availability;
+    }
+
+    // Clone method
+    // Overrides Cloneable interface's clone()
+    @Override
+    public Book clone() {
+        try {
+            return (Book) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException("Cannot clone Book", e);
+        }
     }
 
     // Overload of Object's equals method with Book parameter

@@ -3,18 +3,12 @@ package library;
 import java.util.*;
 
 public class Member {
-    // Static member number
     private static int currentNum = 100;
-    // Member number
     private int memberNum;
-    // ID
     private int id;
-    // Name
     private String name;
-    // Loans list
     private ArrayList<Loan> loans;
 
-    // Constructor
     public Member(String name, int id) {
         this.memberNum = currentNum++;
         this.id = id;
