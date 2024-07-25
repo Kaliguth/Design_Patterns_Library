@@ -1,4 +1,8 @@
 package library.observer;
 
-public class Observer {
+public interface Observer {
+
+    // Observer update method
+    void update(String notification);
+
 }

@@ -15,7 +15,7 @@ public class Member {
     private ArrayList<Loan> loans;
 
     // Constructor
-    public Member(String name, int id) {
+    public Member(int id, String name) {
         this.memberNum = currentNum++;
         this.id = id;
         this.name = name;
@@ -24,7 +24,7 @@ public class Member {
 
     // Getters & Setters
     public int getMemberNum() {
-        return this.memberNum;
+        return memberNum;
     }
 
     public void setMemberNum(int memberNum) {
@@ -32,7 +32,7 @@ public class Member {
     }
 
     public int getId() {
-        return this.id;
+        return id;
     }
 
     public void setId(int id) {
@@ -40,7 +40,7 @@ public class Member {
     }
 
     public String getName() {
-        return this.name;
+        return name;
     }
 
     public void setName(String name) {
@@ -48,25 +48,30 @@ public class Member {
     }
 
     public List<Loan> getLoans() {
-        return this.loans;
+        return loans;
+    }
+
+    public void setLoans(ArrayList<Loan> loans) {
+        this.loans = loans;
     }
 
     // Overload of Object's equals method with Member parameter
     public boolean equals(Member member) {
         if (this == member) return true;
 
-        return this.memberNum == member.memberNum &&
-                this.id == member.id &&
+        return this.id == member.id &&
                 this.name.equals(member.name);
     }
 
+    // toString method
     @Override
     public String toString() {
         return "Member{" +
-                "memberNum=" + this.memberNum +
-                ", id=" + this.id +
-                ", name=" + this.name +
-                ", loans=" + this.loans +
+                "memberNum=" + memberNum +
+                ", id=" + id +
+                ", name=" + name +
+                ", loans=" + loans +
                 '}';
     }
+
 }

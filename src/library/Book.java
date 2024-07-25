@@ -5,16 +5,16 @@ public class Book implements Cloneable {
     private String title;
     // Author
     private String author;
-    // Publication date
-    private String publicationDate;
+    // PublishDate date
+    private String publishDate;
     // Boolean to determine if the book is available
     private boolean isAvailable;
 
     // Constructor
-    public Book(String title, String author, String publicationDate) {
+    public Book(String title, String author, String publishDate) {
         this.title = title;
         this.author = author;
-        this.publicationDate = publicationDate;
+        this.publishDate = publishDate;
         this.isAvailable = true;
     }
 
@@ -28,30 +28,30 @@ public class Book implements Cloneable {
     }
 
     public String getAuthor() {
-        return this.author;
+        return author;
     }
 
     public void setAuthor(String author) {
         this.author = author;
     }
 
-    public String getPublicationDate() {
-        return this.publicationDate;
+    public String getPublishDate() {
+        return publishDate;
     }
 
-    public void setPublicationDate(String publicationDate) {
-        this.publicationDate = publicationDate;
+    public void setPublishDate(String publishDate) {
+        this.publishDate = publishDate;
     }
 
     public boolean isAvailable() {
         return isAvailable;
     }
 
-    public void setAvailability(boolean availability) {
-        this.isAvailable = availability;
+    public void setAvailability(boolean isAvailable) {
+        this.isAvailable = isAvailable;
     }
 
-    // Clone method
+    // Clone method to create a copy of the book
     // Overrides Cloneable interface's clone()
     @Override
     public Book clone() {
@@ -68,14 +68,16 @@ public class Book implements Cloneable {
 
         return this.title.equals(book.title) &&
                 this.author.equals(book.author) &&
-                this.publicationDate.equals(book.publicationDate);
+                this.publishDate.equals(book.publishDate);
     }
 
+    // toString method
+    @Override
     public String toString() {
-        return "title=" + this.title +
-                ", author=" + this.author +
-                ", publication date=" + this.publicationDate +
-                ", available=" + this.isAvailable;
+        return "title=" + title +
+                ", author=" + author +
+                ", publication date=" + publishDate +
+                ", available=" + isAvailable;
     }
 
 }

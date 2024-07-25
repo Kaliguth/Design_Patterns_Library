@@ -23,7 +23,7 @@ public class Loan {
 
     // Getters & Setters
     public Book getBook() {
-        return this.book;
+        return book;
     }
 
     public void setBook(Book book) {
@@ -31,7 +31,7 @@ public class Loan {
     }
 
     public Member getMember() {
-        return this.member;
+        return member;
     }
 
     public void setMember(Member member) {
@@ -39,7 +39,7 @@ public class Loan {
     }
 
     public LocalDate getLoanDate() {
-        return this.loanDate;
+        return loanDate;
     }
 
     public void setLoanDate(LocalDate loanDate) {
@@ -47,7 +47,7 @@ public class Loan {
     }
 
     public LocalDate getReturnDate() {
-        return this.returnDate;
+        return returnDate;
     }
 
     public void setReturnDate(LocalDate returnDate) {
@@ -63,13 +63,15 @@ public class Loan {
                 this.loanDate.equals(loan.loanDate);
     }
 
+    // toString method
     @Override
     public String toString() {
         return "Loan{" +
-                "book=" + this.book.getTitle() +
-                ", member=" + this.member.getName() +
-                ", loanDate=" + this.loanDate +
-                ", returnDate=" + this.returnDate +
+                "book=" + book.getTitle() +
+                ", member=" + member.getName() +
+                ", loanDate=" + loanDate +
+                ", returnDate=" + returnDate +
                 '}';
     }
+
 }
