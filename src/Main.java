@@ -2,6 +2,7 @@
 
 import library.*;
 import library.facade.LibrarianFacade;
+import ui.LibraryGUI;
 
 public class Main {
     public static void main(String[] args) {
@@ -51,6 +52,8 @@ public class Main {
 
         System.out.println("\nlibrary status:");
         librarian.showLibraryStatus();
+
+        LibraryGUI libraryGUI = new LibraryGUI(librarian);
 
     }
 

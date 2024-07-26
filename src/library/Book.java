@@ -76,7 +76,7 @@ public class Book implements Cloneable {
     public String toString() {
         return "title=" + title +
                 ", author=" + author +
-                ", publication date=" + publishDate +
+                ", publish date=" + publishDate +
                 ", available=" + isAvailable;
     }
 
