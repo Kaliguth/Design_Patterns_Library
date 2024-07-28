@@ -4,11 +4,11 @@ package library.objects;
 
 public class Book implements Cloneable {
     // Title
-    private String title;
+    private final String title;
     // Author
-    private String author;
+    private final String author;
     // PublishDate date
-    private String publishDate;
+    private final String publishDate;
     // Boolean to determine if the book is available
     private boolean isAvailable;
 
@@ -55,6 +55,8 @@ public class Book implements Cloneable {
     // Overload of Object's equals method with Book parameters - does not check availability
     // Explanation: There can be few books with the same parameters but different availability
     public boolean equals(Book book) {
+        if (book == null) return false;
+
         if (this == book) return true;
 
         return this.title.equals(book.title) &&

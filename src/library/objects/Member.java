@@ -8,11 +8,11 @@ public class Member {
     // Static member number
     private static int currentNum = 100;
     // Member number
-    private int memberNum;
+    private final int memberNum;
     // ID
-    private int id;
+    private final int id;
     // Name
-    private String name;
+    private final String name;
     // Loans list
     private ArrayList<Loan> loans;
 
@@ -47,6 +47,8 @@ public class Member {
 
     // Overload of Object's equals method with Member parameter
     public boolean equals(Member member) {
+        if (member == null) return false;
+
         if (this == member) return true;
 
         return this.id == member.id &&

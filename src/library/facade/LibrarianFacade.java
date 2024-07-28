@@ -80,6 +80,12 @@ public class LibrarianFacade {
         if (member == null) {
             return false;
         }
+
+        // If the same member is already registered to the library
+        Member existingMember = library.findMember(member.getId(), member.getName());
+        if (existingMember != null && member.equals(existingMember)) {
+            return false;
+        }
         return library.getMembers().add(member);
     }
 

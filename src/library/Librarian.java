@@ -38,9 +38,9 @@ public class Librarian implements Observer {
     }
 
     // Handle notifications for createBook
-    public void createBook(String title, String author, String publicationDate) {
+    public void createBook(String title, String author, String publishDate) {
         // Add the newly created book in Facade into a Book object
-        Book newBook = facade.createBook(title, author, publicationDate);
+        Book newBook = facade.createBook(title, author, publishDate);
 
         // Check if creation succeeded - add the book if it did, update an error message if not
         if (newBook != null) {

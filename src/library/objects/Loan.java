@@ -8,11 +8,11 @@ public class Loan {
     // Static loan number
     private static int currentNum = 1000;
     // Loan id
-    private int id;
+    private final int id;
     // Loaned book
-    private Book book;
+    private final Book book;
     // Loan member
-    private Member member;
+    private final Member member;
     // Loan date
     private LocalDate loanDate;
     // Return date
@@ -28,7 +28,7 @@ public class Loan {
         this.returnDate = this.loanDate.plusDays(7);
     }
 
-    // Getters (didn't have use for setters)
+    // Getters & Setters
     public int getId() {
         return id;
     }
@@ -45,12 +45,22 @@ public class Loan {
         return loanDate;
     }
 
+    public void setLoanDate(LocalDate loanDate) {
+        this.loanDate = loanDate;
+    }
+
     public LocalDate getReturnDate() {
         return returnDate;
     }
 
+    public void setReturnDate(LocalDate returnDate) {
+        this.returnDate = returnDate;
+    }
+
     // Overload of Object's equals method with Loan parameter
     public boolean equals(Loan loan) {
+        if (loan == null) return false;
+
         if (this == loan) return true;
 
         return this.book.equals(loan.book) &&
