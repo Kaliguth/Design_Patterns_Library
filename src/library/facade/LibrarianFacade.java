@@ -6,6 +6,8 @@ import library.Loan;
 import library.Member;
 import library.factory.LibraryFactory;
 
+import java.util.*;
+
 public class LibrarianFacade {
     // Singleton instance
     private static LibrarianFacade instance;
@@ -25,6 +27,26 @@ public class LibrarianFacade {
         return instance;
     }
 
+    // Method to return library's books
+    public ArrayList<Book> getBooks() {
+        return library.getBooks();
+    }
+
+    // Method to return library's members
+    public ArrayList<Member> getMembers() {
+        return library.getMembers();
+    }
+
+    // Method to return library's loans
+    public ArrayList<Loan> getLoans() {
+        return library.getLoans();
+    }
+
+    // Use library's status method
+    public String showLibraryStatus() {
+        return library.status();
+    }
+
     // Using LibraryFactory to create a book
     public Book createBook(String title, String author, String publishDate) {
         return LibraryFactory.createBook(title, author, publishDate);
@@ -39,11 +61,12 @@ public class LibrarianFacade {
     }
 
     // Method to remove a book from the library
-    public boolean removeBook(Book book) {
-        if (book == null) {
+    public boolean removeBook(String title, String author, String publishDate) {
+        Book bookToRemove = library.findBook(title, author, publishDate);
+        if (bookToRemove == null) {
             return false;
         }
-        return library.getBooks().remove(book);
+        return library.getBooks().remove(bookToRemove);
     }
 
     // Using LibraryFactory to create a member
@@ -60,11 +83,12 @@ public class LibrarianFacade {
     }
 
     // Method to remove a member from the library
-    public boolean removeMember(Member member) {
-        if (member == null) {
+    public boolean removeMember(int id, String name) {
+        Member memberToRemove = library.findMember(id, name);
+        if (memberToRemove == null) {
             return false;
         }
-        return library.getMembers().remove(member);
+        return library.getMembers().remove(memberToRemove);
     }
 
     // Using LibraryFactory to create a loan
@@ -105,11 +129,6 @@ public class LibrarianFacade {
         library.getLoans().remove(loanToRemove);
         member.getLoans().remove(loanToRemove);
         return true;
-    }
-
-    // Use library's status method
-    public String showLibraryStatus() {
-        return library.status();
     }
 
 }

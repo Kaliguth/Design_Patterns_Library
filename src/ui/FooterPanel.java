@@ -35,18 +35,32 @@ public class FooterPanel extends JPanel {
         JButton kaliBtn = new JButton("Einav");
         kaliBtn.setFont(new Font("Serif", Font.BOLD, 14));
         kaliBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        kaliBtn.addActionListener(e -> PanelHelper.openGithub(e, "Kaliguth"));
+        kaliBtn.addActionListener(e -> openGithub(e, "Kaliguth"));
         footerRight.add(kaliBtn, BorderLayout.EAST);
         // Tamar
         JButton tamarBtn = new JButton("Tamar");
         tamarBtn.setFont(new Font("Serif", Font.BOLD, 14));
         tamarBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        tamarBtn.addActionListener(e -> PanelHelper.openGithub(e, "Tamarpick"));
+        tamarBtn.addActionListener(e -> openGithub(e, "Tamarpick"));
         footerRight.add(tamarBtn, BorderLayout.EAST);
 
         // Add both panels into the footer panel
         add(footerLeft, BorderLayout.WEST);
         add(footerRight, BorderLayout.EAST);
+    }
+
+    // Footer methods:
+    // Action listener to open GitHub for the buttons
+    public static void openGithub(ActionEvent e, String username) {
+        try {
+            Desktop.getDesktop().browse(new URI("https://github.com/" + username));
+            System.out.println(e.getActionCommand() + "'s GitHub page opened");
+        } catch (IOException | URISyntaxException ex) {
+            JOptionPane.showMessageDialog(null,
+                    "Website not found!","Error",
+                    JOptionPane.ERROR_MESSAGE);
+            System.out.println(ex.getMessage());
+        }
     }
 
 }

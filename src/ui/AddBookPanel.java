@@ -5,75 +5,95 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class AddBookPanel extends JPanel {
+    // Use main window object for button clicks (switching panels)
     private final Window window;
+    // Input Text fields
+    private JTextField titleInput;
+    private JTextField authorInput;
+    private JTextField publishDateInput;
 
+    // Constructor
     public AddBookPanel(Window window) {
         // Set the layout fit for spaces
         super(new BorderLayout());
-        // Use main window object for button clicks (switching panels)
         this.window = window;
         initialize();
     }
 
     // Method to handle button clicks
-    private void handleButtonClick(ActionEvent e) {
+    private void handleButtonClicks(ActionEvent e) {
         String command = e.getActionCommand();
 
-        if (command.equals("Main Menu")) {
-                window.switchToPanel(new MainMenu(window));
+        // If Submit button is clicked
+        if (command.equals("Submit")) {
+            // Check if the inputs are not empty and filled
+            if (!titleInput.getText().isEmpty() && !titleInput.getText().equals("Title") &&
+                    !authorInput.getText().isEmpty() && !authorInput.getText().equals("Author") &&
+                    !publishDateInput.getText().isEmpty() && !publishDateInput.getText().equals("Publish Date")) {
+                // Get the input texts
+                String bookTitle = titleInput.getText();
+                String bookAuthor = authorInput.getText();
+                String bookPublishDate = publishDateInput.getText();
+                // Create and add the book
+                window.getLibrarian().createBook(bookTitle, bookAuthor, bookPublishDate);
+                // Reset the input fields
+                titleInput.setText("Title");
+                titleInput.setForeground(Color.GRAY);
+                authorInput.setText("Author");
+                authorInput.setForeground(Color.GRAY);
+                publishDateInput.setText("Publish Date");
+                publishDateInput.setForeground(Color.GRAY);
+            } else {
+                // If any of the inputs is empty or not filled
+                window.getLibrarian().update("Please fill in all the required fields");
+            }
+            // If Main Menu button is clicked
+        } else if (command.equals("Main Menu")) {
+            // Change panel to main menu
+            window.switchToPanel(new MainMenu(window));
         }
     }
 
     public void initialize() {
-        setLayout(new BorderLayout());
-
         // Title Panel in the top center for the title text
-        JPanel titlePanel = new JPanel();
-        titlePanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 20));
-        titlePanel.setBackground(Color.LIGHT_GRAY);
+        JPanel titlePanel = PanelHelper.createTitlePanel("Add Book");
 
-        // Add book label
-        JLabel title = new JLabel("Add book");
-        title.setFont(new Font("Serif", Font.BOLD, 24));
-        title.setForeground(Color.BLACK);
-        title.setBackground(Color.CYAN);
-        title.setOpaque(true); // Used for making background visible
-        titlePanel.add(title);
+        // Create a panel for input fields
+        JPanel formPanel = new JPanel();
+        formPanel.setLayout(new GridLayout(6, 1, 5, 5));
+        formPanel.setBackground(Color.LIGHT_GRAY);
+        formPanel.setBorder(BorderFactory.createEmptyBorder(5, 20, 20, 20));
 
-        // Create a panel for input fields and labels
-        JPanel inputPanel = new JPanel();
-        inputPanel.setLayout(new GridLayout(6, 1, 5, 5));
-        inputPanel.setBackground(Color.LIGHT_GRAY);
-        inputPanel.setBorder(BorderFactory.createEmptyBorder(5, 20, 20, 20));
+        // Input fields - seperated to different panels for positioning
+        // Title input field and panel
+        titleInput = PanelHelper.createInputBox("Title");
+        JPanel titleInputPanel = PanelHelper.createInputPanel(titleInput);
 
-        // Title label and input field
-        JPanel titleInputPanel = PanelHelper.createInputPanel("Title");
+        // Author input field and panel
+        authorInput = PanelHelper.createInputBox("Author");
+        JPanel authorInputPanel = PanelHelper.createInputPanel(authorInput);
 
-        // Author label and input field
-        JPanel authorInputPanel = PanelHelper.createInputPanel("Author");
+        // Publish date input filed and panel
+        publishDateInput = PanelHelper.createInputBox("Publish Date");
+        JPanel publishDateInputPanel = PanelHelper.createInputPanel(publishDateInput);
 
-        // Publish Date label and input field
-        JPanel publishDateInputPanel = PanelHelper.createInputPanel("Publish Date");
-
-        // Add a button to submit the form
-        JPanel addBookButtonPanel = PanelHelper.createButtonPanel("Submit",
-                this::handleButtonClick);
+        // Submit button to add the book
+        JButton addBookButton = PanelHelper.createButton("Submit", this::handleButtonClicks);
+        JPanel addBookButtonPanel = PanelHelper.createButtonPanel(addBookButton);
 
         // Button to go Back to main menu
-        JPanel backButtonPanel = PanelHelper.createButtonPanel("Main Menu",
-                this::handleButtonClick);
+        PanelHelper.createMainMenuButton(this, this::handleButtonClicks);
 
         // Add labels and input fields to the input panel
-        inputPanel.add(titleInputPanel);
-        inputPanel.add(authorInputPanel);
-        inputPanel.add(publishDateInputPanel);
-        inputPanel.add(addBookButtonPanel);
-        inputPanel.add(backButtonPanel);
+        formPanel.add(titleInputPanel);
+        formPanel.add(authorInputPanel);
+        formPanel.add(publishDateInputPanel);
+        formPanel.add(addBookButtonPanel);
 
 
         // Add the input panel and title to the main panel
         add(titlePanel, BorderLayout.NORTH);
-        add(inputPanel, BorderLayout.CENTER);
+        add(formPanel, BorderLayout.CENTER);
     }
 
 }

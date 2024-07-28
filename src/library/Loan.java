@@ -3,6 +3,10 @@ package library;
 import java.time.LocalDate;
 
 public class Loan {
+    // Static loan number
+    private static int currentNum = 1000;
+    // Loan id
+    private int id;
     // Loaned book
     private Book book;
     // Loan member
@@ -14,6 +18,7 @@ public class Loan {
 
     // Constructor
     public Loan(Book book, Member member) {
+        this.id = currentNum++;
         this.book = book;
         this.member = member;
         this.loanDate = LocalDate.now();
@@ -22,6 +27,14 @@ public class Loan {
     }
 
     // Getters & Setters
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public Book getBook() {
         return book;
     }

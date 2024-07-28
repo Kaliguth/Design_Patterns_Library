@@ -3,6 +3,9 @@ package library;
 import library.facade.LibrarianFacade;
 import library.observer.Observer;
 
+import javax.swing.*;
+import java.util.ArrayList;
+
 public class Librarian implements Observer {
     // Singleton LibrarianFacade object
     private final LibrarianFacade facade;
@@ -13,11 +16,27 @@ public class Librarian implements Observer {
         Library.getInstance().registerObserver(this);
     }
 
+    public ArrayList<Book> getBooks() {
+        return facade.getBooks();
+    }
+
+    public ArrayList<Member> getMembers() {
+        return facade.getMembers();
+    }
+
+    public ArrayList<Loan> getLoans() {
+        return facade.getLoans();
+    }
+
+    // Use facade to show library status
+    public void showLibraryStatus() {
+        System.out.println(facade.showLibraryStatus());
+    }
+
     // Handle notifications for createBook
     public void createBook(String title, String author, String publicationDate) {
         Book newBook = facade.createBook(title, author, publicationDate);
         if (newBook != null) {
-            update("Successfully created \"" + newBook.getTitle() + "\"");
             addBook(newBook);
         } else {
             update("Failed to create book");
@@ -35,7 +54,7 @@ public class Librarian implements Observer {
 
     // Handle notifications for removeBook
     public void removeBook(Book book) {
-        if (facade.removeBook(book)) {
+        if (facade.removeBook(book.getTitle(), book.getAuthor(), book.getPublishDate())) {
             update("Book removed: \"" + book.getTitle() + "\"");
         } else {
             update("Failed to remove book");
@@ -46,7 +65,6 @@ public class Librarian implements Observer {
     public void createMember(int id, String name) {
         Member newMember = facade.createMember(id, name);
         if (newMember != null) {
-            update("Member " + newMember.getMemberNum() + " created: " + newMember.getId() + " - " + newMember.getName());
             registerMember(newMember);
         } else {
             update("Failed to create member");
@@ -65,7 +83,7 @@ public class Librarian implements Observer {
 
     // Handle notifications for removeMember
     public void removeMember(Member member) {
-        if (facade.removeMember(member)) {
+        if (facade.removeMember(member.getId(), member.getName())) {
             update("Member removed: " + member.getId() + " - " + member.getName());
         } else {
             update("Failed to remove member");
@@ -102,15 +120,13 @@ public class Librarian implements Observer {
         }
     }
 
-    // Use facade to show library status
-    public void showLibraryStatus() {
-        System.out.println(facade.showLibraryStatus());
-    }
-
     // Override for Observer interface update
     @Override
     public void update(String notification) {
-        System.out.println(notification);
+        if (!notification.contains("found"))
+            JOptionPane.showMessageDialog(null,
+                notification,"Message",
+                JOptionPane.INFORMATION_MESSAGE);
     }
 
 }

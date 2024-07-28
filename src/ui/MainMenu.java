@@ -27,33 +27,33 @@ public class MainMenu extends JPanel {
             case "Add Book":
                 newPanel = new AddBookPanel(window);
                 break;
-//            case "Remove Book":
-//                newPanel = new RemoveBookPanel();
-//                break;
-//            case "Register Member":
-//                newPanel = new RegisterMemberPanel();
-//                break;
-//            case "Remove Member":
-//                newPanel = new RemoveMemberPanel();
-//                break;
-//            case "Loan Book":
-//                newPanel = new LoanBookPanel();
-//                break;
-//            case "Return Book":
-//                newPanel = new ReturnBookPanel();
-//                break;
-//            case "Show Books":
-//                newPanel = new ShowBooksPanel();
-//                break;
-//            case "Show Members":
-//                newPanel = new ShowMembersPanel();
-//                break;
-//            case "Show Loans":
-//                newPanel = new ShowLoansPanel();
-//                break;
-//            case "Show Library Status":
-//                newPanel = new ShowLibraryStatusPanel();
-//                break;
+            case "Remove Book":
+                newPanel = new RemoveBookPanel(window);
+                break;
+            case "Register Member":
+                newPanel = new RegisterMemberPanel(window);
+                break;
+            case "Remove Member":
+                newPanel = new RemoveMemberPanel(window);
+                break;
+            case "Loan Book":
+                newPanel = new LoanBookPanel(window);
+                break;
+            case "Return Book":
+                newPanel = new ReturnBookPanel(window);
+                break;
+            case "Show Books":
+                newPanel = new BooksPanel(window, true);
+                break;
+            case "Show Members":
+                newPanel = new MembersPanel(window, true);
+                break;
+            case "Show Loans":
+                newPanel = new LoansPanel(window, true);
+                break;
+            case "Show Library Status":
+                newPanel = new LibraryStatusPanel(window);
+                break;
             default:
                 newPanel = new MainMenu(window);
         }
@@ -64,17 +64,7 @@ public class MainMenu extends JPanel {
     // Method to initialize all MainMenu components
     public void initialize() {
         // Title Panel in the top center for the title text
-        JPanel titlePanel = new JPanel();
-        titlePanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 20));
-        titlePanel.setBackground(Color.LIGHT_GRAY);
-
-        // MainMenu label
-        JLabel title = new JLabel("Main Menu");
-        title.setFont(new Font("Serif", Font.BOLD, 24));
-        title.setForeground(Color.BLACK);
-        title.setBackground(Color.CYAN);
-        title.setOpaque(true); // Used for making background visible
-        titlePanel.add(title);
+        JPanel titlePanel = PanelHelper.createTitlePanel("Main Menu");
 
         // 2x2 grid panel for management panels
         JPanel gridPanel = new JPanel();

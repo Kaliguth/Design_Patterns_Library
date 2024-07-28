@@ -57,16 +57,22 @@ public class Library extends ObserverSubject {
     }
 
     // Method to find a book in the library's book list
-    public Book findBook(String title, String author, String publicationDate) {
-        Book bookToFind = new Book(title, author, publicationDate);
-        for (Book book : books) {
-            if (book.equals(bookToFind)) {
-                notifyObserver("Book found");
-                return book;
+    public Book findBook(String title, String author, String publishDate) {
+        Book bookToFind = new Book(title, author, publishDate);
+        Book availableBook = null;
+        for (int i=0; i<books.size(); i++) {
+            if (books.get(i).equals(bookToFind) && books.get(i).isAvailable()) {
+                availableBook = books.get(i);
             }
         }
-        notifyObserver("Book not found");
-        return null;
+
+        if (availableBook == null) {
+            notifyObserver("Book not found");
+        } else {
+            notifyObserver("Book found");
+        }
+
+        return availableBook;
     }
 
     // Method to find a loan by book and member in the library's loans list

@@ -1,15 +1,25 @@
 package ui;
 
+import library.Librarian;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class Window extends JFrame {
+    // Currently displayed panel
     private JPanel currentPanel;
+    // Librarian object
+    private final Librarian librarian;
 
     // Constructor
-    public Window() {
+    public Window(Librarian librarian) {
+        this.librarian = librarian;
         // Initialize the MainWindow components
         initialize();
+    }
+
+    public Librarian getLibrarian() {
+        return librarian;
     }
 
     // Method to switch to a different panel after buttons are clicked
@@ -30,7 +40,7 @@ public class Window extends JFrame {
         // Set window caption text, default close action, window size, window location and disable resizing
         setTitle("Kali Library");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setSize(800, 600);
+        setSize(900, 600);
         setLocationRelativeTo(null);
         setResizable(false);
 

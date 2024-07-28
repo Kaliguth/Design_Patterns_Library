@@ -74,10 +74,10 @@ public class Book implements Cloneable {
     // toString method
     @Override
     public String toString() {
-        return "title=" + title +
-                ", author=" + author +
-                ", publish date=" + publishDate +
-                ", available=" + isAvailable;
+        return "\"" + title + "\"" +
+                "  -  Written by " + author +
+                "      Publish Date: " + publishDate +
+                "      " + (isAvailable? "AVAILABLE" : "LOANED");
     }
 
 }

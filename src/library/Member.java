@@ -55,6 +55,19 @@ public class Member {
         this.loans = loans;
     }
 
+    public String printLoans() {
+        StringBuilder loansString = new StringBuilder();
+        loansString.append("Loans:\n");
+        for (Loan loan : loans) {
+            String loanDetails = "Book: " + loan.getBook().getTitle() + "\n" +
+                    "Loan Date: " + loan.getLoanDate() + "\n" +
+                    "Return Date: " + loan.getReturnDate() + "\n\n";
+            loansString.append(loanDetails);
+        }
+
+        return loansString.toString();
+    }
+
     // Overload of Object's equals method with Member parameter
     public boolean equals(Member member) {
         if (this == member) return true;
@@ -66,12 +79,10 @@ public class Member {
     // toString method
     @Override
     public String toString() {
-        return "Member{" +
-                "memberNum=" + memberNum +
-                ", id=" + id +
-                ", name=" + name +
-                ", loans=" + loans +
-                '}';
+        return "Member number " + memberNum +
+                " - " + name +
+                "      ID: " + id +
+                "      Number of loans: " + loans.size();
     }
 
 }
