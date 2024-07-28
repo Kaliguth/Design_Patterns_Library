@@ -1,53 +1,54 @@
-package ui;
+// Books info panel
 
-import library.Book;
+package ui.information_panels;
 
+import library.objects.Book;
+import ui.Window;
+import ui.MainMenu;
+import ui.util.PanelHelper;
+
+import java.util.*;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
-import java.awt.event.*;
-import java.util.*;
 
 public class BooksPanel extends JPanel {
     // Use main window object for button clicks (switching panels)
     private final Window window;
-    // Show back button boolean
+    // Show back button boolean (does not show on library status panel)
     private final boolean showBackButton;
 
+    // Constructor
     public BooksPanel(Window window, boolean showBackButton) {
-        // Set the layout fit for spaces
+        // Books panel layout
         super(new BorderLayout());
+        // Window object
         this.window = window;
+        // Back button boolean
         this.showBackButton = showBackButton;
+        // Initialize all BooksPanel components
         initialize();
     }
 
-    // Method to handle button clicks
-    private void handleButtonClicks(ActionEvent e) {
-        String command = e.getActionCommand();
-
-        if (command.equals("Main Menu")) {
-            // Change panel to main menu
-            window.switchToPanel(new MainMenu(window));
-        }
-    }
-
+    // Method to initialize all BooksPanel components
     public void initialize() {
         // Title Panel in the top center for the title text
         JPanel titlePanel = PanelHelper.createTitlePanel("Books");
 
-        // Create a panel for book panels
-        ArrayList<Book> books = window.getLibrarian().getBooks(); // Library's books list
+        // Main panel for book panels:
+        // Library's books list
+        ArrayList<Book> books = window.getLibrarian().getBooks();
+        // Calculate rows by how many books there are (max 3 books per row)
         int rows = (int) Math.ceil((double) books.size() / 3);
         JPanel booksPanel = PanelHelper.createListPanel(rows, 3);
 
-        // Wrap booksPanel with scrollable panel
+        // Wrap booksPanel with scrollable panel for scrolling
         JScrollPane scrollableBooksPanel = new JScrollPane(booksPanel);
         scrollableBooksPanel.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         scrollableBooksPanel.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         scrollableBooksPanel.getVerticalScrollBar().setUnitIncrement(20);
 
-        // Books list
+        // If there are no books - show No books label
         if (books.isEmpty()) {
             JPanel noBooksPanel = new JPanel();
             noBooksPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 20));
@@ -57,6 +58,7 @@ public class BooksPanel extends JPanel {
             noBooksPanel.add(noBooksLabel);
             add(noBooksPanel, BorderLayout.CENTER);
         } else {
+            // Book panels creation
             for (Book book : books) {
                 JPanel panel = new JPanel();
                 panel.setLayout(new GridLayout(3, 1, 10, 10));
@@ -77,9 +79,9 @@ public class BooksPanel extends JPanel {
 
         // Button to go Back to main menu
         if (showBackButton)
-            PanelHelper.createMainMenuButton(this, this::handleButtonClicks);
+            PanelHelper.createMainMenuButton(this, _ -> window.switchToPanel(new MainMenu(window)));
 
-        // Add the input panel and title to the main panel
+        // Add both panels to BooksPanel
         add(titlePanel, BorderLayout.NORTH);
         add(scrollableBooksPanel, BorderLayout.CENTER);
     }

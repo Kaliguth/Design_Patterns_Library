@@ -1,6 +1,9 @@
+// Window class - main application window frame
+
 package ui;
 
 import library.Librarian;
+import ui.layout.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,7 +11,7 @@ import java.awt.*;
 public class Window extends JFrame {
     // Currently displayed panel
     private JPanel currentPanel;
-    // Librarian object
+    // Librarian object (like logged in user)
     private final Librarian librarian;
 
     // Constructor
@@ -18,6 +21,7 @@ public class Window extends JFrame {
         initialize();
     }
 
+    // Get librarian method
     public Librarian getLibrarian() {
         return librarian;
     }
@@ -30,13 +34,13 @@ public class Window extends JFrame {
 
         currentPanel = newPanel;
         add(currentPanel, BorderLayout.CENTER);
+        // Rerun the window with new panel
         revalidate();
         repaint();
     }
 
-    // Method to initialize all component of MainWindow
+    // Method to initialize all components
     public void initialize() {
-        // Window configurations:
         // Set window caption text, default close action, window size, window location and disable resizing
         setTitle("Kali Library");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -44,7 +48,7 @@ public class Window extends JFrame {
         setLocationRelativeTo(null);
         setResizable(false);
 
-        // Create and initialize header and footer
+        // Header and Footer panels creation
         HeaderPanel header = new HeaderPanel(this);
         FooterPanel footer = new FooterPanel();
 

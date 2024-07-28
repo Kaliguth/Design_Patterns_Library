@@ -1,5 +1,8 @@
+// Library GUI class - runs the library application
+
 package ui;
 
+// Library imports
 import library.Librarian;
 
 public class LibraryGUI implements Runnable{
@@ -15,7 +18,7 @@ public class LibraryGUI implements Runnable{
     }
 
     // Method to run the library application
-    // Override of runnable run
+    // Override of runnable run method
     @Override
     public void run() {
         window.initialize();

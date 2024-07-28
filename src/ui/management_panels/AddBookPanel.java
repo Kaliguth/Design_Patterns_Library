@@ -1,4 +1,8 @@
-package ui;
+package ui.management_panels;
+
+import ui.Window;
+import ui.MainMenu;
+import ui.util.PanelHelper;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,9 +18,11 @@ public class AddBookPanel extends JPanel {
 
     // Constructor
     public AddBookPanel(Window window) {
-        // Set the layout fit for spaces
+        // AddBookPanel layout
         super(new BorderLayout());
+        // Window object
         this.window = window;
+        // Initialize all AddBookPanel components
         initialize();
     }
 
@@ -24,8 +30,8 @@ public class AddBookPanel extends JPanel {
     private void handleButtonClicks(ActionEvent e) {
         String command = e.getActionCommand();
 
-        // If Submit button is clicked
-        if (command.equals("Submit")) {
+        // If Add Book button is clicked
+        if (command.equals("Add Book")) {
             // Check if the inputs are not empty and filled
             if (!titleInput.getText().isEmpty() && !titleInput.getText().equals("Title") &&
                     !authorInput.getText().isEmpty() && !authorInput.getText().equals("Author") &&
@@ -34,8 +40,10 @@ public class AddBookPanel extends JPanel {
                 String bookTitle = titleInput.getText();
                 String bookAuthor = authorInput.getText();
                 String bookPublishDate = publishDateInput.getText();
+
                 // Create and add the book
                 window.getLibrarian().createBook(bookTitle, bookAuthor, bookPublishDate);
+
                 // Reset the input fields
                 titleInput.setText("Title");
                 titleInput.setForeground(Color.GRAY);
@@ -54,44 +62,51 @@ public class AddBookPanel extends JPanel {
         }
     }
 
+    // Method to initialize all AddBookPanel components
     public void initialize() {
         // Title Panel in the top center for the title text
-        JPanel titlePanel = PanelHelper.createTitlePanel("Add Book");
+        JPanel titlePanel = PanelHelper.createTitlePanel("New Book Creation");
 
-        // Create a panel for input fields
+        // Main form panel
         JPanel formPanel = new JPanel();
-        formPanel.setLayout(new GridLayout(6, 1, 5, 5));
+        formPanel.setLayout(new BoxLayout(formPanel, BoxLayout.Y_AXIS));
         formPanel.setBackground(Color.LIGHT_GRAY);
-        formPanel.setBorder(BorderFactory.createEmptyBorder(5, 20, 20, 20));
+        formPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
-        // Input fields - seperated to different panels for positioning
-        // Title input field and panel
+        // Input label
+        JLabel addBookLabel = new JLabel("Enter book details:");
+        addBookLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        // Input fields:
+        // Title
         titleInput = PanelHelper.createInputBox("Title");
-        JPanel titleInputPanel = PanelHelper.createInputPanel(titleInput);
-
-        // Author input field and panel
+        titleInput.setMaximumSize(new Dimension(250, 30));
+        // Author
         authorInput = PanelHelper.createInputBox("Author");
-        JPanel authorInputPanel = PanelHelper.createInputPanel(authorInput);
-
-        // Publish date input filed and panel
+        authorInput.setMaximumSize(new Dimension(250, 30));
+        // Publish date
         publishDateInput = PanelHelper.createInputBox("Publish Date");
-        JPanel publishDateInputPanel = PanelHelper.createInputPanel(publishDateInput);
+        publishDateInput.setMaximumSize(new Dimension(250, 30));
 
-        // Submit button to add the book
-        JButton addBookButton = PanelHelper.createButton("Submit", this::handleButtonClicks);
-        JPanel addBookButtonPanel = PanelHelper.createButtonPanel(addBookButton);
+        // Add Book button to add the book
+        JButton addButton = PanelHelper.createButton("Add Book", this::handleButtonClicks);
+        addButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        // Add label, input fields and button to the form panel
+        formPanel.add(addBookLabel);
+        formPanel.add(Box.createRigidArea(new Dimension(0, 15)));
+        formPanel.add(titleInput);
+        formPanel.add(Box.createRigidArea(new Dimension(0, 15)));
+        formPanel.add(authorInput);
+        formPanel.add(Box.createRigidArea(new Dimension(0, 15)));
+        formPanel.add(publishDateInput);
+        formPanel.add(Box.createRigidArea(new Dimension(0, 35)));
+        formPanel.add(addButton);
 
         // Button to go Back to main menu
         PanelHelper.createMainMenuButton(this, this::handleButtonClicks);
 
-        // Add labels and input fields to the input panel
-        formPanel.add(titleInputPanel);
-        formPanel.add(authorInputPanel);
-        formPanel.add(publishDateInputPanel);
-        formPanel.add(addBookButtonPanel);
-
-
-        // Add the input panel and title to the main panel
+        // Add both panels to AddBookPanel
         add(titlePanel, BorderLayout.NORTH);
         add(formPanel, BorderLayout.CENTER);
     }

@@ -1,4 +1,6 @@
-package library;
+// Member class
+
+package library.objects;
 
 import java.util.*;
 
@@ -27,24 +29,12 @@ public class Member {
         return memberNum;
     }
 
-    public void setMemberNum(int memberNum) {
-        this.memberNum = memberNum;
-    }
-
     public int getId() {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public List<Loan> getLoans() {
@@ -53,19 +43,6 @@ public class Member {
 
     public void setLoans(ArrayList<Loan> loans) {
         this.loans = loans;
-    }
-
-    public String printLoans() {
-        StringBuilder loansString = new StringBuilder();
-        loansString.append("Loans:\n");
-        for (Loan loan : loans) {
-            String loanDetails = "Book: " + loan.getBook().getTitle() + "\n" +
-                    "Loan Date: " + loan.getLoanDate() + "\n" +
-                    "Return Date: " + loan.getReturnDate() + "\n\n";
-            loansString.append(loanDetails);
-        }
-
-        return loansString.toString();
     }
 
     // Overload of Object's equals method with Member parameter

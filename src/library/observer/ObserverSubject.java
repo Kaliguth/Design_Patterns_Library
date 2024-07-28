@@ -1,7 +1,10 @@
+// Observer subject class
+
 package library.observer;
 
 public class ObserverSubject {
-    // Observer object - single observer only
+    // Observer object - single observer only for now
+    // Will change to Observer list in the future
     Observer observer;
 
     // Method to register the method
@@ -9,7 +12,7 @@ public class ObserverSubject {
         this.observer = observer;
     }
 
-    // Method to remove the observer
+    // Method to remove the observer (unused)
     public void removeObserver() {
         observer = null;
     }

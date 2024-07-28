@@ -1,4 +1,6 @@
-package library;
+// Book class
+
+package library.objects;
 
 public class Book implements Cloneable {
     // Title
@@ -23,24 +25,12 @@ public class Book implements Cloneable {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
     public String getAuthor() {
         return author;
     }
 
-    public void setAuthor(String author) {
-        this.author = author;
-    }
-
     public String getPublishDate() {
         return publishDate;
-    }
-
-    public void setPublishDate(String publishDate) {
-        this.publishDate = publishDate;
     }
 
     public boolean isAvailable() {
@@ -52,7 +42,7 @@ public class Book implements Cloneable {
     }
 
     // Clone method to create a copy of the book
-    // Overrides Cloneable interface's clone()
+    // Overrides Cloneable interface's clone method
     @Override
     public Book clone() {
         try {
@@ -62,7 +52,8 @@ public class Book implements Cloneable {
         }
     }
 
-    // Overload of Object's equals method with Book parameter
+    // Overload of Object's equals method with Book parameters - does not check availability
+    // Explanation: There can be few books with the same parameters but different availability
     public boolean equals(Book book) {
         if (this == book) return true;
 

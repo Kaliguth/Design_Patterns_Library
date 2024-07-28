@@ -1,19 +1,29 @@
-package ui;
+// Register member panel class
+
+package ui.management_panels;
+
+import ui.Window;
+import ui.MainMenu;
+import ui.util.PanelHelper;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
 public class RegisterMemberPanel extends JPanel {
-    private final Window window;
+    // Use main window object for button clicks (switching panels)
+    private final ui.Window window;
+    // Input Text fields
     private JTextField idInput;
     private JTextField nameInput;
 
+    // Constructor
     public RegisterMemberPanel(Window window) {
-        // Set the layout fit for spaces
+        // RegisterMemberPanel layout
         super(new BorderLayout());
-        // Use main window object for button clicks (switching panels)
+        // Window object
         this.window = window;
+        // Initialize all RegisterMemberPanel components
         initialize();
     }
 
@@ -21,8 +31,8 @@ public class RegisterMemberPanel extends JPanel {
         private void handleButtonClicks(ActionEvent e) {
             String command = e.getActionCommand();
 
-            // If Submit button is clicked
-            if (command.equals("Register")) {
+            // If Register Member button is clicked
+            if (command.equals("Register Member")) {
                 // Get the input texts
                 String idText = idInput.getText();
                 String nameText = nameInput.getText();
@@ -31,6 +41,7 @@ public class RegisterMemberPanel extends JPanel {
                 try {
                     int memberId = Integer.parseInt(idText);
 
+                    // Check if name is not empty and filled
                     if (!nameText.isEmpty() && !nameText.equals("Name")) {
                         // Create and add the member
                         window.getLibrarian().createMember(memberId, nameText);
@@ -58,39 +69,46 @@ public class RegisterMemberPanel extends JPanel {
             }
         }
 
+    // Method to initialize all RegisterMemberPanel components
     public void initialize() {
         // Title Panel in the top center for the title text
-        JPanel titlePanel = PanelHelper.createTitlePanel("Register Member");
+        JPanel titlePanel = PanelHelper.createTitlePanel("Member Registration");
 
-        // Create a panel for input fields and labels
+        // Main form panel
         JPanel formPanel = new JPanel();
-        formPanel.setLayout(new GridLayout(6, 1, 5, 5));
+        formPanel.setLayout(new BoxLayout(formPanel, BoxLayout.Y_AXIS));
         formPanel.setBackground(Color.LIGHT_GRAY);
-        formPanel.setBorder(BorderFactory.createEmptyBorder(5, 20, 20, 20));
+        formPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
-        // Input fields - seperated to different panels for positioning
-        // Title input field and panel
+        // Enter details label
+        JLabel registerLabel = new JLabel("Enter member details:");
+        registerLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        // Input fields:
+        // ID
         idInput = PanelHelper.createInputBox("ID");
-        JPanel titleInputPanel = PanelHelper.createInputPanel(idInput);
-
-        // Author input field and panel
+        idInput.setMaximumSize(new Dimension(250, 30));
+        // Author
         nameInput = PanelHelper.createInputBox("Name");
-        JPanel authorInputPanel = PanelHelper.createInputPanel(nameInput);
+        nameInput.setMaximumSize(new Dimension(250, 30));
 
-        // Submit button to add the book
-        JButton addBookButton = PanelHelper.createButton("Register", this::handleButtonClicks);
-        JPanel addBookButtonPanel = PanelHelper.createButtonPanel(addBookButton);
+        // Register Member button to register the member
+        JButton registerButton = PanelHelper.createButton("Register Member", this::handleButtonClicks);
+        registerButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        // Add labels, input fields and button to the form panel
+        formPanel.add(registerLabel);
+        formPanel.add(Box.createRigidArea(new Dimension(0, 15)));
+        formPanel.add(idInput);
+        formPanel.add(Box.createRigidArea(new Dimension(0, 15)));
+        formPanel.add(nameInput);
+        formPanel.add(Box.createRigidArea(new Dimension(0, 35)));
+        formPanel.add(registerButton);
 
         // Button to go Back to main menu
         PanelHelper.createMainMenuButton(this, this::handleButtonClicks);
 
-        // Add labels and input fields to the input panel
-        formPanel.add(titleInputPanel);
-        formPanel.add(authorInputPanel);
-        formPanel.add(addBookButtonPanel);
-
-
-        // Add the input panel and title to the main panel
+        // Add both panels to RegisterMemberPanel
         add(titlePanel, BorderLayout.NORTH);
         add(formPanel, BorderLayout.CENTER);
     }

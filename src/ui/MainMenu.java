@@ -1,4 +1,10 @@
+// Main menu class
+
 package ui;
+
+import ui.information_panels.*;
+import ui.management_panels.*;
+import ui.util.PanelHelper;
 
 import java.util.*;
 import javax.swing.*;
@@ -6,13 +12,14 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class MainMenu extends JPanel {
+    // Window object to handle button clicks (switching panels)
     private final Window window;
 
     // Constructor
     public MainMenu(Window window) {
-        // Set the layout fit for spaces
+        // Main menu layout
         super.setLayout(new BorderLayout());
-        // Use main window object for button clicks (switching panels)
+        // Window object
         this.window = window;
         // Initialize all MainMenu components
         initialize();
@@ -21,42 +28,19 @@ public class MainMenu extends JPanel {
     // Method to handle button clicks and switch to the right panel
     private void handleButtonClick(ActionEvent e) {
         String command = e.getActionCommand();
-        JPanel newPanel;
-
-        switch (command) {
-            case "Add Book":
-                newPanel = new AddBookPanel(window);
-                break;
-            case "Remove Book":
-                newPanel = new RemoveBookPanel(window);
-                break;
-            case "Register Member":
-                newPanel = new RegisterMemberPanel(window);
-                break;
-            case "Remove Member":
-                newPanel = new RemoveMemberPanel(window);
-                break;
-            case "Loan Book":
-                newPanel = new LoanBookPanel(window);
-                break;
-            case "Return Book":
-                newPanel = new ReturnBookPanel(window);
-                break;
-            case "Show Books":
-                newPanel = new BooksPanel(window, true);
-                break;
-            case "Show Members":
-                newPanel = new MembersPanel(window, true);
-                break;
-            case "Show Loans":
-                newPanel = new LoansPanel(window, true);
-                break;
-            case "Show Library Status":
-                newPanel = new LibraryStatusPanel(window);
-                break;
-            default:
-                newPanel = new MainMenu(window);
-        }
+        JPanel newPanel = switch (command) {
+            case "Add Book" -> new AddBookPanel(window);
+            case "Remove Book" -> new RemoveBookPanel(window);
+            case "Register Member" -> new RegisterMemberPanel(window);
+            case "Remove Member" -> new RemoveMemberPanel(window);
+            case "Loan Book" -> new LoanBookPanel(window);
+            case "Return Book" -> new ReturnBookPanel(window);
+            case "Show Books" -> new BooksPanel(window, true);
+            case "Show Members" -> new MembersPanel(window, true);
+            case "Show Loans" -> new LoansPanel(window, true);
+            case "Show Library Status" -> new LibraryStatusPanel(window);
+            default -> new MainMenu(window);
+        };
 
         window.switchToPanel(newPanel);
     }
@@ -68,7 +52,7 @@ public class MainMenu extends JPanel {
 
         // 2x2 grid panel for management panels
         JPanel gridPanel = new JPanel();
-        gridPanel.setLayout(new GridLayout(2, 2, 20, 20)); // 2 rows, 2 columns, 20px gaps
+        gridPanel.setLayout(new GridLayout(2, 2, 20, 20));
         gridPanel.setBackground(Color.LIGHT_GRAY);
         gridPanel.setBorder(BorderFactory.createEmptyBorder(5, 20, 20, 20));
 
@@ -113,4 +97,5 @@ public class MainMenu extends JPanel {
         add(titlePanel, BorderLayout.NORTH);
         add(gridPanel, BorderLayout.CENTER);
     }
+
 }

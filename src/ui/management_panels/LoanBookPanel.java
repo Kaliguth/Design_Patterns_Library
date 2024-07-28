@@ -1,7 +1,12 @@
-package ui;
+// Loan book panel class
 
-import library.Book;
-import library.Member;
+package ui.management_panels;
+
+import library.objects.Book;
+import library.objects.Member;
+import ui.Window;
+import ui.MainMenu;
+import ui.util.PanelHelper;
 
 import java.util.*;
 import javax.swing.*;
@@ -9,15 +14,19 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class LoanBookPanel extends JPanel {
+    // Use main window object for button clicks (switching panels)
     private final Window window;
+    // Combo box objects
     private JComboBox<Book> booksBox;
     private JComboBox<Member> membersBox;
 
+    // Constructor
     public LoanBookPanel(Window window) {
-        // Set the layout fit for spaces
+        // LoanBookPanel layout
         super(new BorderLayout());
-        // Use main window object for button clicks (switching panels)
+        // Window object
         this.window = window;
+        // Initialize all LoanBookPanel components
         initialize();
     }
 
@@ -25,15 +34,18 @@ public class LoanBookPanel extends JPanel {
     private void handleButtonClicks(ActionEvent e) {
         String command = e.getActionCommand();
 
-        // If Submit button is clicked
-        if (command.equals("Loan")) {
-            // Get the input texts
+        // If Loan Book button is clicked
+        if (command.equals("Loan Book")) {
+            // Get the selected book and member
             Book book = (Book) booksBox.getSelectedItem();
             Member member = (Member) membersBox.getSelectedItem();
+
+            // Create and add a loan with selected book and member and remove the book from the combo box
             if (book != null && member != null) {
                 window.getLibrarian().loanBook(book, member);
                 booksBox.removeItem(book);
             } else {
+                // Failure case
                 window.getLibrarian().update("No book selected!");
             }
             // If Main Menu button is clicked
@@ -43,9 +55,10 @@ public class LoanBookPanel extends JPanel {
         }
     }
 
+    // Method to initialize all LoanBookPanel components
     public void initialize() {
         // Title Panel in the top center for the title text
-        JPanel titlePanel = PanelHelper.createTitlePanel("Loan Book");
+        JPanel titlePanel = PanelHelper.createTitlePanel("Loan Books to Members");
 
         // Main form panel
         JPanel formPanel = new JPanel();
@@ -53,12 +66,11 @@ public class LoanBookPanel extends JPanel {
         formPanel.setBackground(Color.LIGHT_GRAY);
         formPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
-        // Panel for book selection
-        JPanel bookPanel = new JPanel();
-        bookPanel.setLayout(new BoxLayout(bookPanel, BoxLayout.Y_AXIS));
-        bookPanel.setBackground(Color.LIGHT_GRAY);
+        // Book loan label
         JLabel bookLabel = new JLabel("Book to loan:");
         bookLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        // Create a combo box with only the books available to loan
         ArrayList<Book> books = window.getLibrarian().getBooks();
         ArrayList<Book> availableBooks = new ArrayList<>();
         for (Book book : books) {
@@ -68,38 +80,35 @@ public class LoanBookPanel extends JPanel {
         }
         booksBox = new JComboBox<>(availableBooks.toArray(new Book[0]));
         booksBox.setMaximumSize(new Dimension(620, 30));
-        bookPanel.add(bookLabel);
-        bookPanel.add(Box.createRigidArea(new Dimension(0, 5)));
-        bookPanel.add(booksBox);
-        bookPanel.add(Box.createRigidArea(new Dimension(0, 20)));
 
-        // Panel for member selection (if needed)
-        JPanel memberPanel = new JPanel();
-        memberPanel.setLayout(new BoxLayout(memberPanel, BoxLayout.Y_AXIS));
-        memberPanel.setBackground(Color.LIGHT_GRAY);
+        // Panel for member selection
         JLabel memberLabel = new JLabel("Member to loan to:");
         memberLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        // Create a combo box with all members
         ArrayList<Member> members = window.getLibrarian().getMembers();
         membersBox = new JComboBox<>(members.toArray(new Member[0]));
         membersBox.setMaximumSize(new Dimension(420, 30));
-        memberPanel.add(memberLabel);
-        memberPanel.add(Box.createRigidArea(new Dimension(0, 5)));
-        memberPanel.add(membersBox);
-        memberPanel.add(Box.createRigidArea(new Dimension(0, 20)));
 
         // Loan button to loan the book
-        JButton loanBookButtonButton = PanelHelper.createButton("Loan", this::handleButtonClicks);
-        JPanel loanBookButtonPanel = PanelHelper.createButtonPanel(loanBookButtonButton);
+        JButton loanButton = PanelHelper.createButton("Loan Book", this::handleButtonClicks);
+        loanButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        // Add all labels, combo boxes and loan button to the form panel
+        formPanel.add(bookLabel);
+        formPanel.add(Box.createRigidArea(new Dimension(0, 15)));
+        formPanel.add(booksBox);
+        formPanel.add(Box.createRigidArea(new Dimension(0, 20)));
+        formPanel.add(memberLabel);
+        formPanel.add(Box.createRigidArea(new Dimension(0, 15)));
+        formPanel.add(membersBox);
+        formPanel.add(Box.createRigidArea(new Dimension(0, 35)));
+        formPanel.add(loanButton);
 
         // Button to go Back to main menu
         PanelHelper.createMainMenuButton(this, this::handleButtonClicks);
 
-        formPanel.add(bookPanel);
-        formPanel.add(memberPanel);
-        formPanel.add(loanBookButtonPanel);
-
-
-        // Add the input panel and title to the main panel
+        // Add both panels to LoanBookPanel
         add(titlePanel, BorderLayout.NORTH);
         add(formPanel, BorderLayout.CENTER);
     }

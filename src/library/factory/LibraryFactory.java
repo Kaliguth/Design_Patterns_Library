@@ -1,8 +1,8 @@
+// Library Factory class
+
 package library.factory;
 
-import library.Book;
-import library.Loan;
-import library.Member;
+import library.objects.*;
 
 public class LibraryFactory {
 

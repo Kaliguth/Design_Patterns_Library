@@ -1,14 +1,26 @@
-package ui;
+// Header panel class
+
+package ui.layout;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class HeaderPanel extends JPanel {
+    // Window object to handle closing on X button click
+    private final Window window;
 
-    public HeaderPanel(JFrame frame) {
+    // Constructor
+    public HeaderPanel(Window window) {
         // Header layout
         super(new BorderLayout());
+        // Window object
+        this.window = window;
+        // Initialize all header components
+        initialize();
+    }
 
+    // Method to initialize all header components
+    public void initialize() {
         // Empty panel in the left of the header panel for alignment of components
         JPanel emptyLeftPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         emptyLeftPanel.setBackground(Color.ORANGE);
@@ -18,7 +30,7 @@ public class HeaderPanel extends JPanel {
         // Title panel in the center of header panel
         JPanel titlePanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         titlePanel.setBackground(Color.ORANGE);
-        JLabel title = new JLabel(frame.getTitle());
+        JLabel title = new JLabel("Kali Library");
         title.setFont(new Font("Serif", Font.BOLD | Font.ITALIC, 30));
         titlePanel.add(title);
 
@@ -31,7 +43,7 @@ public class HeaderPanel extends JPanel {
         exitBtn.setForeground(Color.DARK_GRAY);
         exitBtn.setOpaque(true); // Used for making background visible
         exitBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        exitBtn.addActionListener(_ -> frame.dispose());
+        exitBtn.addActionListener(_ -> window.dispose()); // Action listener to close the application
         exitButtonPanel.add(exitBtn);
 
         // Add all panels into the header panel

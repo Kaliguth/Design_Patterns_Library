@@ -1,8 +1,13 @@
+// Library class - Singleton and ObserverSubject
+
 package library;
 
-import library.observer.Observer;
+import library.objects.Book;
+import library.objects.Loan;
+import library.objects.Member;
 import library.observer.ObserverSubject;
 
+// Util imports
 import java.util.*;
 
 public class Library extends ObserverSubject {
@@ -56,66 +61,85 @@ public class Library extends ObserverSubject {
         this.loans = loans;
     }
 
-    // Method to find a book in the library's book list
+    // Method to find a book in the library's books list by book parameters
     public Book findBook(String title, String author, String publishDate) {
+        // Book to find object
         Book bookToFind = new Book(title, author, publishDate);
+
+        // Go over books list to find a fitting book that is also available
         Book availableBook = null;
-        for (int i=0; i<books.size(); i++) {
-            if (books.get(i).equals(bookToFind) && books.get(i).isAvailable()) {
-                availableBook = books.get(i);
+        for (Book book : books) {
+            if (book.equals(bookToFind) && book.isAvailable()) {
+                availableBook = book;
             }
         }
 
+        // Check if an available book was found and notify the observer
         if (availableBook == null) {
             notifyObserver("Book not found");
         } else {
             notifyObserver("Book found");
         }
 
+        // Return the book (null checked later)
         return availableBook;
     }
 
     // Method to find a loan by book and member in the library's loans list
     public Loan findLoan(Book book, Member member) {
+        // Go over loans list, find fitting loan and notify the observer
         for (Loan loan : loans) {
             if (loan.getBook().equals(book) && loan.getMember().equals(member)) {
                 notifyObserver("Loan found");
                 return loan;
             }
         }
+
+        // Return null if loan not found and notify the observer (null checked later)
         notifyObserver("Loan not found");
         return null;
     }
 
     // Method to find a member in the library's members list
     public Member findMember(int id, String name) {
+        // Member to find object
         Member memberToFind = new Member(id, name);
+
+        // Go over members list, find fitting member and notify the observer
         for (Member member : members) {
             if (member.equals(memberToFind)) {
                 notifyObserver("Member found");
                 return member;
             }
         }
+
+        // Return null if member not found and notify the observer (null checked later)
         notifyObserver("Member not found");
         return null;
     }
 
-    // Method to show library status
+    // Method to show library status as string
     public String status() {
+        // String builder object
         StringBuilder status = new StringBuilder();
-       status.append("Books:\n");
+
+        // Books
+        status.append("Books:\n");
         for (Book book : books) {
             status.append(book.toString()).append("\n");
         }
+        // Members
         status.append("\nMembers:\n");
         for (Member member : members) {
             status.append(member.toString()).append("\n");
         }
+        // Loans
         status.append("\nLoans:\n");
         for (Loan loan : loans) {
             status.append(loan.toString()).append("\n");
         }
 
+        // Return the string builder as string
         return status.toString();
     }
 

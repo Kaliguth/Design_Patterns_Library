@@ -1,53 +1,53 @@
-package ui;
+// Loans panel class
 
-import library.Loan;
+package ui.information_panels;
 
+import library.objects.Loan;
+import ui.Window;
+import ui.MainMenu;
+import ui.util.PanelHelper;
+
+import java.util.*;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
-import java.awt.event.*;
-import java.util.*;
 
 public class LoansPanel extends JPanel {
     // Use main window object for button clicks (switching panels)
-    private final Window window;
-    // Show back button boolean
+    private final ui.Window window;
+    // Show back button boolean (does not show on library status panel)
     private final boolean showBackButton;
 
+    // Constructor
     public LoansPanel(Window window, boolean showBackButton) {
-        // Set the layout fit for spaces
+        // LoansPanel layout
         super(new BorderLayout());
+        // Window object
         this.window = window;
+        // Back button boolean
         this.showBackButton = showBackButton;
+        // Initialize all LoansPanel components
         initialize();
-    }
-
-    // Method to handle button clicks
-    private void handleButtonClicks(ActionEvent e) {
-        String command = e.getActionCommand();
-
-        if (command.equals("Main Menu")) {
-            // Change panel to main menu
-            window.switchToPanel(new MainMenu(window));
-        }
     }
 
     public void initialize() {
         // Title Panel in the top center for the title text
         JPanel titlePanel = PanelHelper.createTitlePanel("Loans");
 
-        // Create a panel for loan panels
-        ArrayList<Loan> loans = window.getLibrarian().getLoans(); // Library's loans list
+        // Main panel for loan panels:
+        // Library's loans list
+        ArrayList<Loan> loans = window.getLibrarian().getLoans();
+        // Calculate rows by how many loans there are (max 3 books per row)
         int rows = (int) Math.ceil((double) loans.size() / 3);
         JPanel loansPanel = PanelHelper.createListPanel(rows, 3);
 
-        // Wrap loansPanel with scrollable panel
+        // Wrap loansPanel with scrollable panel for scrolling
         JScrollPane scrollableLoansPanel = new JScrollPane(loansPanel);
         scrollableLoansPanel.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         scrollableLoansPanel.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         scrollableLoansPanel.getVerticalScrollBar().setUnitIncrement(20);
 
-        // Loans list
+        // If there are no loans - show No loans label
         if (loans.isEmpty()) {
             JPanel noLoansPanel = new JPanel();
             noLoansPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 20));
@@ -57,6 +57,7 @@ public class LoansPanel extends JPanel {
             noLoansPanel.add(noLoansLabel);
             add(noLoansPanel, BorderLayout.CENTER);
         } else {
+            // Loan panels creation
             for (Loan loan : loans) {
                 JPanel panel = new JPanel();
                 panel.setLayout(new GridLayout(4, 1, 10, 10));
@@ -76,15 +77,17 @@ public class LoansPanel extends JPanel {
                 panel.setBackground(Color.WHITE);
                 loansPanel.add(panel, BorderLayout.CENTER);
             }
+
+            // Add scrollable panel to LoansPanel
             add(scrollableLoansPanel, BorderLayout.CENTER);
         }
 
         // Button to go Back to main menu
         if (showBackButton) {
-            PanelHelper.createMainMenuButton(this, this::handleButtonClicks);
+            PanelHelper.createMainMenuButton(this, _ -> window.switchToPanel(new MainMenu(window)));
         }
 
-        // Add the input panel and title to the main panel
+        // Add title panel to LoansPanel
         add(titlePanel, BorderLayout.NORTH);
     }
 

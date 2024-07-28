@@ -1,6 +1,6 @@
-package ui;
+// Panel helper class
 
-import library.Book;
+package ui.util;
 
 import java.util.*;
 import javax.swing.*;
@@ -8,14 +8,11 @@ import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.*;
 
-// Utility class that holds repetitive methods to help minimize lines of code
+// Utility class that holds repetitive methods to help minimize lines of code in classes
 public class PanelHelper {
 
     // Method to create a titled panel with all given buttons (for Main Menu)
     public static JPanel createManagePanel(String title, ArrayList<JButton> buttons, ActionListener listener) {
-        // Panel creation and configurations:
-        // Set GridLayout with one column and spaces between buttons,
-        // Border for the panel with the title and background color
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(buttons.size(), 1, 10, 10));
         TitledBorder titledBorder = BorderFactory.createTitledBorder(title);
@@ -42,7 +39,6 @@ public class PanelHelper {
         titlePanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 20));
         titlePanel.setBackground(Color.LIGHT_GRAY);
 
-        // Remove book label
         JLabel title = new JLabel(text);
         title.setFont(new Font("Serif", Font.BOLD, 24));
         title.setForeground(Color.BLACK);
@@ -53,7 +49,7 @@ public class PanelHelper {
         return titlePanel;
     }
 
-    // Button to go Back to main menu
+    // Method to create a button to go back to main menu
     public static void createMainMenuButton(JPanel panel, ActionListener listener) {
         JButton backButton = PanelHelper.createButton("Main Menu", listener);
         JPanel backButtonPanel = PanelHelper.createButtonPanel(backButton);
@@ -71,17 +67,6 @@ public class PanelHelper {
         inputBox.addFocusListener(placeholderListener(inputBox, placeholder));
 
         return inputBox;
-    }
-
-    // Method to create an input panel (because it was repetitive)
-    public static JPanel createInputPanel(JTextField inputBox) {
-        JPanel panel = new JPanel();
-
-        panel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 20));
-        panel.setBackground(Color.LIGHT_GRAY);
-        panel.add(inputBox);
-
-        return panel;
     }
 
     // Method to handle focus events for placeholder text
@@ -106,9 +91,7 @@ public class PanelHelper {
         };
     }
 
-    // Method to create a combo box panel
-
-    // Method to create a single button for forms
+    // Method to create a single button
     public static JButton createButton(String text, ActionListener listener) {
         JButton button = new JButton(text);
         button.setFont(new Font("Serif", Font.BOLD, 14));
@@ -119,7 +102,7 @@ public class PanelHelper {
         return button;
     }
 
-    // Method to create a panel of a single button
+    // Method to create a panel of a single button - used for main menu buttons to be separated
     public static JPanel createButtonPanel(JButton button) {
         JPanel panel = new JPanel();
         panel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 20));

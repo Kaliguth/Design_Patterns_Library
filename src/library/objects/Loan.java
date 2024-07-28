@@ -1,4 +1,6 @@
-package library;
+// Loan class
+
+package library.objects;
 
 import java.time.LocalDate;
 
@@ -26,45 +28,25 @@ public class Loan {
         this.returnDate = this.loanDate.plusDays(7);
     }
 
-    // Getters & Setters
+    // Getters (didn't have use for setters)
     public int getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public Book getBook() {
         return book;
     }
 
-    public void setBook(Book book) {
-        this.book = book;
-    }
-
     public Member getMember() {
         return member;
-    }
-
-    public void setMember(Member member) {
-        this.member = member;
     }
 
     public LocalDate getLoanDate() {
         return loanDate;
     }
 
-    public void setLoanDate(LocalDate loanDate) {
-        this.loanDate = loanDate;
-    }
-
     public LocalDate getReturnDate() {
         return returnDate;
-    }
-
-    public void setReturnDate(LocalDate returnDate) {
-        this.returnDate = returnDate;
     }
 
     // Overload of Object's equals method with Loan parameter
@@ -73,18 +55,17 @@ public class Loan {
 
         return this.book.equals(loan.book) &&
                 this.member.equals(loan.member) &&
-                this.loanDate.equals(loan.loanDate);
+                this.loanDate.equals(loan.loanDate) &&
+                this.returnDate.equals(loan.returnDate);
     }
 
     // toString method
     @Override
     public String toString() {
-        return "Loan{" +
-                "book=" + book.getTitle() +
-                ", member=" + member.getName() +
-                ", loanDate=" + loanDate +
-                ", returnDate=" + returnDate +
-                '}';
+        return "\"" + book.getTitle() + "\"" +
+                "  -  loaned by " + member.getName() +
+                "      Loan Date: " + loanDate +
+                "      Return Date: " + returnDate;
     }
 
 }

@@ -1,17 +1,38 @@
-package ui;
+// Footer panel class
+
+package ui.layout;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
+import java.net.*;
 
 public class FooterPanel extends JPanel {
-
+    // Constructor
     public FooterPanel() {
         // Footer layout
         super(new BorderLayout());
+        // Initialize all footer components
+        initialize();
+    }
+
+    // Action listener to open GitHub for the buttons
+    public static void openGithub(ActionEvent e, String username) {
+        try {
+            Desktop.getDesktop().browse(new URI("https://github.com/" + username));
+            System.out.println(e.getActionCommand() + "'s GitHub page opened");
+        } catch (IOException | URISyntaxException ex) {
+            JOptionPane.showMessageDialog(null,
+                    "Website not found!", "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            System.out.println(ex.getMessage());
+        }
+    }
+
+    // Method to initialize all footer components
+    public void initialize() {
+        // Background color
         setBackground(Color.ORANGE);
 
         // Footer left panel with credit text
@@ -25,11 +46,13 @@ public class FooterPanel extends JPanel {
         // Footer right panel with GitHub buttons
         JPanel footerRight = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 10));
         footerRight.setBackground(Color.ORANGE);
+
         // GitHub links label
         JLabel githubLabel = new JLabel("Github links:");
         githubLabel.setFont(new Font("Serif", Font.BOLD, 16));
         githubLabel.setForeground(Color.BLACK);
         footerRight.add(githubLabel, BorderLayout.EAST);
+
         // GitHub buttons:
         // Einav
         JButton kaliBtn = new JButton("Einav");
@@ -47,20 +70,6 @@ public class FooterPanel extends JPanel {
         // Add both panels into the footer panel
         add(footerLeft, BorderLayout.WEST);
         add(footerRight, BorderLayout.EAST);
-    }
-
-    // Footer methods:
-    // Action listener to open GitHub for the buttons
-    public static void openGithub(ActionEvent e, String username) {
-        try {
-            Desktop.getDesktop().browse(new URI("https://github.com/" + username));
-            System.out.println(e.getActionCommand() + "'s GitHub page opened");
-        } catch (IOException | URISyntaxException ex) {
-            JOptionPane.showMessageDialog(null,
-                    "Website not found!","Error",
-                    JOptionPane.ERROR_MESSAGE);
-            System.out.println(ex.getMessage());
-        }
     }
 
 }
